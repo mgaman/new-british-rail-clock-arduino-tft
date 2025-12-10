@@ -10,7 +10,7 @@ others to learn from it.<br>
 My project was setup for a 240x240 circular TFT screen using a GC9A01 chip. The choice of TFT is irrelevant to the code of the clock.
 **Caveat** The time displayed is entirely fake. It is simple a counter initialized to an arbitary value and incremented by the ESP32 internal crystal.
 ## Sprites
-The heart of the code is the management of 4 sprites. The two arrow sprites only get drawn once as they never get over-drawn. The time spite needs to be redrawn every time the time changes (every minute). The base sprite needs to be redrawn every clock tick as it has been over-drawn by the other sprites.
+The heart of the code is the management of 4 sprites. The two arrow sprites only get drawn once as they never get over-drawn. The time sprite needs to be redrawn every time the time changes (every minute). The base sprite needs to be redrawn every clock tick as it has been over-drawn by the other sprites.
 ## Timer
 The basic cycle of the clock is 1 minute. The two arrows complete a circuit of the clock which is a distance of 240 pixels up & down i.e 480 pixels in 60 seconds. The clock is therefore programmed to tick every 60M/480 microsecs.<br>
 

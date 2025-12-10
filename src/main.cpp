@@ -85,10 +85,10 @@ void drawBase() {
  * the second half the < arrow on the inner circle.
  * Note how I make > go clockwize and < anti-clockwize 
  * 
- * @param angle The angle between 12 and current minute, expressed in radians. e.g 15 minutes is at 90 degrees
- * of PI/2 radians. 
+ * @param angle The angle between 12 and current second, expressed in radians. e.g 15 seconds is at 90 degrees
+ * or PI/2 radians. 
  */
-void locateArrows(float angle) {  // angle in radians
+void locateArrows(float angle) {
   // calculate pivot points for locating arrows
   int16_t xOuter = hypotenuse*sin(angle);
   int16_t yOuter = hypotenuse*cos(angle);

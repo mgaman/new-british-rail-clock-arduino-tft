@@ -1,0 +1,73 @@
+/*
+         01234     arrowWidth 4
+        XYYYYY
+      0 X.
+      1 X .
+      2 X  .
+      3 X   .
+      4 X    .
+      5 X   .
+      6 X  .
+      7 X .
+      8 X.
+*/
+
+#include <math.h>
+#include <SPI.h>
+#include <TFT_eSPI.h> // Hardware-specific library
+#include <math.h>
+
+#define ARROW_WIDTH 20
+#define MARGIN  30
+
+TFT_eSPI tft = TFT_eSPI()  ;    // Invoke custom library
+TFT_eSprite baseSprite = TFT_eSprite(&tft);  
+TFT_eSprite arrowSprite = TFT_eSprite(&tft);  // contains circles
+ 
+
+#define BLPIN 22
+
+void drawBase() {
+  baseSprite.fillSprite(TFT_BLACK);
+  baseSprite.drawRect(0,0,baseSprite.width()-1,baseSprite.width()-1,TFT_YELLOW);
+}
+
+void drawArrow() {
+  arrowSprite.fillSprite(TFT_BLACK);
+  arrowSprite.drawLine(0,0,ARROW_WIDTH,ARROW_WIDTH,TFT_RED);
+  arrowSprite.drawLine(0,1,ARROW_WIDTH-1,ARROW_WIDTH,TFT_RED);
+  arrowSprite.drawLine(ARROW_WIDTH,ARROW_WIDTH,0,2*ARROW_WIDTH,TFT_RED);
+  arrowSprite.drawLine(ARROW_WIDTH-1,ARROW_WIDTH,0,(2*ARROW_WIDTH)-1,TFT_RED);
+  arrowSprite.fillCircle(ARROW_WIDTH/2,ARROW_WIDTH,3,TFT_PURPLE);
+}
+
+void drawScreen(int angle) {
+  drawBase();
+  drawArrow();
+  arrowSprite.pushRotated(&baseSprite,angle,TFT_BLACK);
+  baseSprite.pushSprite(tft.width()/2-MARGIN,tft.width()/2-MARGIN);
+}
+
+void setup(void) {
+  Serial.begin(115200);
+  delay(1000);
+  pinMode(BLPIN,OUTPUT);
+  digitalWrite(BLPIN,HIGH);
+  tft.init();
+  tft.setRotation(0);
+  tft.fillScreen(TFT_BLACK); 
+
+  baseSprite.createSprite(2*MARGIN,2*MARGIN);
+  arrowSprite.createSprite(ARROW_WIDTH+1,(ARROW_WIDTH*2)+1);
+  //arrowSprite.setPivot(5,5);
+  Serial.printf("pX %d pY %d\r\n",arrowSprite.getPivotX(),arrowSprite.getPivotY());
+}
+
+void loop() {
+  for (int i=0;i<360;i+=10) {
+    drawScreen(i);
+    delay(500);
+  }
+}
+
+

@@ -46,10 +46,11 @@ void drawArrowSprite() {
   GtArrowSprite.fillSprite(TFT_BLACK);
   LtArrowSprite.fillSprite(TFT_BLACK);
   for (int l=0;l<5;l++) {
-    GtArrowSprite.drawLine(0,l,            ARROW_WIDTH+l,ARROW_WIDTH, CIRCLE_COLOR); 
-    LtArrowSprite.drawLine(0,l+ARROW_WIDTH,ARROW_WIDTH+l,2*ARROW_WIDTH,CIRCLE_COLOR);
-    GtArrowSprite.drawLine(ARROW_WIDTH-l, ARROW_WIDTH,0,(2*ARROW_WIDTH)-l,CIRCLE_COLOR);
-    LtArrowSprite.drawLine(ARROW_WIDTH-l, 0          ,0,ARROW_WIDTH-l,CIRCLE_COLOR);
+    GtArrowSprite.drawLine(0,l,ARROW_WIDTH-l,ARROW_WIDTH-1,CIRCLE_COLOR); // fixed x1 and y2
+    GtArrowSprite.drawLine(ARROW_WIDTH-l,ARROW_WIDTH,0,(2*ARROW_WIDTH)-l,CIRCLE_COLOR); // fixed y1 and x2
+
+    LtArrowSprite.drawLine(l,ARROW_WIDTH,ARROW_WIDTH-1,l,CIRCLE_COLOR); // fixed y1 and x2
+    LtArrowSprite.drawLine(l,ARROW_WIDTH,ARROW_WIDTH-1,(2*ARROW_WIDTH)-l,CIRCLE_COLOR); // fixed y1 and x2
   }
 }
 
@@ -147,7 +148,7 @@ void setup(void) {
   timerAlarmWrite(Timer0_Cfg, 60000000L/DOT_STEPS, true);
   timerAlarmEnable(Timer0_Cfg);
 
-  currentMinute = 58;  // want to see minute/hour rollover quickly
+  currentMinute = 58+(23*60);  // want to see minute/hour rollover quickly
   displayTime(currentMinute++);
 }
 

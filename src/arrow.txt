@@ -1,0 +1,62 @@
+/*
+   https://www.youtube.com/watch?v=k9GNMepc9xs  
+   https://youtube.com/shorts/Q88IBHg2Aqc
+
+*/
+
+#include <Arduino.h>
+#include <math.h>
+#include <SPI.h>
+#include <TFT_eSPI.h> // Hardware-specific library
+
+#define BASE_COLOR TFT_BLACK
+#define ARROW_COLOR TFT_RED
+
+#define ARROW_WIDTH 10
+#define LINE_HEIGHT 10
+
+TFT_eSPI tft = TFT_eSPI()  ;    // Invoke custom library
+TFT_eSprite GtArrowSprite = TFT_eSprite(&tft);  // > arrow
+TFT_eSprite LtArrowSprite = TFT_eSprite(&tft);  // < arrow
+
+
+/**
+ * @brief Draw both arrows in the same color as the rings. The containing sprite is twice as high as
+ * it is wide. For the > shaped arrow, 2 sloped lines are drawn, from (0,0) to (width,width) and (width,width)
+ * to (0,width*2). The < shaped arrow is drawn as a mirror of <. The for loop is to make the line thicker.
+ * 
+ */
+void drawArrowSprite() {
+  GtArrowSprite.fillSprite(TFT_BLACK);
+  LtArrowSprite.fillSprite(TFT_BLACK);
+  for (int l=0;l<5;l++) {
+    GtArrowSprite.drawLine(0,l,ARROW_WIDTH-l,ARROW_WIDTH-1,ARROW_COLOR); // fixed x1 and y2
+    GtArrowSprite.drawLine(ARROW_WIDTH-l,ARROW_WIDTH,0,(2*ARROW_WIDTH)-l,ARROW_COLOR); // fixed y1 and x2
+
+    LtArrowSprite.drawLine(l,ARROW_WIDTH,ARROW_WIDTH-1,l,ARROW_COLOR); // fixed y1 and x2
+    LtArrowSprite.drawLine(l,ARROW_WIDTH,ARROW_WIDTH-1,(2*ARROW_WIDTH)-l,ARROW_COLOR); // fixed y1 and x2
+  }
+}
+
+void setup(void) {
+  Serial.begin(115200);
+  delay(1000);
+  tft.init();
+  tft.setRotation(0);
+  tft.fillScreen(BASE_COLOR); 
+    int sw = tft.width();
+    int sh = tft.height();
+  // create  arrow sprites and draw on the screen
+  GtArrowSprite.createSprite(ARROW_WIDTH+1,(ARROW_WIDTH*2)+1);
+  LtArrowSprite.createSprite(ARROW_WIDTH+1,(ARROW_WIDTH*2)+1);
+  drawArrowSprite();  // only need to do this once
+//  tft.fillRect(0,(sh/2)-(LINE_HEIGHT/2),sw,LINE_HEIGHT,TFT_YELLOW);
+  GtArrowSprite.pushSprite(90,(sh/2)-ARROW_WIDTH,TFT_BLACK);
+  LtArrowSprite.pushSprite(110,(sh/2)-ARROW_WIDTH,TFT_BLACK);
+}
+
+void loop() {
+
+}
+
+

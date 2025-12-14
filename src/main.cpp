@@ -148,7 +148,7 @@ void setup(void) {
   timerAlarmWrite(Timer0_Cfg, 60000000L/DOT_STEPS, true);
   timerAlarmEnable(Timer0_Cfg);
 
-  currentMinute = 58+(23*60);  // want to see minute/hour rollover quickly
+  currentMinute = 59+(23*60);  // want to see minute/hour rollover quickly
   displayTime(currentMinute++);
 }
 

@@ -1,3 +1,5 @@
+<p align="center"><img src="images/IMG_0668.png"></p>  
+
 # British Railways new style clock
 In Autumn 2025 the management of British Rail proudly announced the introduction of a [new style clock](https://www.networkrail.co.uk/stories/a-new-timepiece-for-the-railway/).<p>
 Reportedly this was achieved at a bargain price of £120,000.<br>

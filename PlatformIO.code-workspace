@@ -6,6 +6,10 @@
 		{
 			"name": "BRClock",
 			"path": "."
+		},
+		{
+			"name": "new-british-rail-clock-arduino-tft",
+			"path": "../new-british-rail-clock-arduino-tft"
 		}
 	],
 	"settings": {}
